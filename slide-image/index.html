@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css"
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slideshow-container {
+      width: 480px;
+      position: relative;
+      margin: auto;
+    }
+
+    .dot {
+      cursor: pointer;
+      height: 15px;
+      width: 15px;
+      margin: 0 2px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.6s ease;
+    }
+
+    .active,
+    .dot:hover {
+      background-color: #717171;
+    }
+
+    .fade {
+      -webkit-animation-name: fade;
+      -webkit-animation-duration: 1.5s;
+      animation-name: fade;
+      animation-duration: 1.5s;
+    }
+
+    .img-wrapper {
+      font-size: 350px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .prev,
+    .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      padding: 16px;
+      margin-top: -22px;
+      color: #ced4da;
+      font-weight: bold;
+      font-size: 18px;
+      transition: 0.6s ease;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+    }
+
+    .next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .prev:hover,
+    .next:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .active,
+    .dot:hover {
+      background-color: #717171;
+    }
+
+
+    @-webkit-keyframes fade {
+      from {
+        opacity: .4;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fade {
+      from {
+        opacity: .4;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slideshow-container">
+
+    <div class="slide fade">
+      <div class="img-wrapper">
+        <i class="fa fa-windows" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <div class="slide fade">
+      <div class="img-wrapper">
+        <i class="fa fa-apple" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <div class="slide fade">
+      <div class="img-wrapper">
+        <i class="fa fa-linux" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <div class="slide fade">
+      <div class="img-wrapper">
+        <i class="fa fa-amazon" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <div class="slide fade">
+      <div class="img-wrapper">
+        <i class="fa fa-bitbucket" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <div class="slide fade">
+      <div class="img-wrapper">
+        <i class="fa fa-firefox" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <div class="slide fade">
+      <div class="img-wrapper">
+        <i class="fa fa-opera" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <div class="slide fade">
+      <div class="img-wrapper">
+        <i class="fa fa-git" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <a class="prev" onclick="slide.next()">&#10094;</a>
+    <a class="next" onclick="slide.next()">&#10095;</a>
+  </div>
+  <div style="text-align:center; margin-top: 20px;">
+    <span class="dot" onclick="slide.move(1)"></span>
+    <span class="dot" onclick="slide.move(2)"></span>
+    <span class="dot" onclick="slide.move(3)"></span>
+    <span class="dot" onclick="slide.move(4)"></span>
+    <span class="dot" onclick="slide.move(5)"></span>
+    <span class="dot" onclick="slide.move(6)"></span>
+    <span class="dot" onclick="slide.move(7)"></span>
+    <span class="dot" onclick="slide.move(8)"></span>
+  </div>
+  <script>
+    var slide = (() => {
+      var index = 1;
+      var show = function (n) {
+        var slides = document.getElementsByClassName('slide');
+        var dots = document.getElementsByClassName('dot');
+
+        if (n > slides.length) index = 1;
+        if (n < 1) index = slides.length;
+
+        Array.apply(null, slides).forEach(function (item, idx) {
+          item.style.display = idx === index - 1 ? 'block' : 'none';
+        });
+        Array.apply(null, dots).forEach(function (item, idx) {
+          if (idx === index - 1) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+
+      }
+
+      show(1);
+      return {
+        move: function (n) {
+          show(n);
+        },
+        prev: function () {
+          show(index -= 1);
+        },
+        next: function () {
+          show(index += 1);
+        }
+      }
+    })();
+
+  </script>
+
+</body>
+
+</html>
