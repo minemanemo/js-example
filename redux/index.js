@@ -1,49 +1,52 @@
-import { createStore } from "./redux.js";
+import { createStore, createAction } from "./redux.js";
 
-const INCREMENT = "increament";
-const RESET = "reset";
+// Action 정의
+const ACTION_INIT = "INIT";
+const ACTION_INCR = "INCREAMENT";
+const ACTION_DECR = "DECREAMENT";
 
-function reducer(state = {}, action) {
-  if (action.type === INCREMENT) {
-    return {
-      ...state,
-      count: state.count ? state.count + 1 : 1,
-    };
-  } else if (action.type === RESET) {
-    return {
-      ...state,
-      count: action.resetCount || 0,
-    };
+// Reducer 정의
+function reducer(state = {}, /* action */ { type, payload }) {
+  switch (type) {
+    case ACTION_INIT:
+      return {
+        ...state,
+        count: payload.count || 0,
+      }
+    case ACTION_INCR:
+      return {
+        ...state,
+        count: state.count + 1 || 0,
+      }
+    case ACTION_DECR:
+      return {
+        ...state,
+        count: state.count - 1 || 0,
+      }
+    default:
+      return { ...state };
   }
-
-  return state;
 }
 
-function update() {
-  console.log(store.getState());
-}
-
+// Store 생성
 const store = createStore(reducer);
-store.subscribe(update);
 
-function actionCreator(type, payload) {
-  return {
-    ...payload,
-    type: type,
-  };
-}
+// Subscriber 등록
+store.subscribe(() => {
+  console.log(store.getState());
+});
 
-function increament() {
-  store.dispatch(actionCreator(INCREMENT));
-}
+// Dispatch Wrapper 정의
+const reset = (count = 0) => store.dispatch(createAction(ACTION_INIT, { count }));
+const increament = () => store.dispatch(createAction(ACTION_INCR));
+const decreament = () => store.dispatch(createAction(ACTION_DECR));
 
-function reset(resetCnt = 10) {
-  store.dispatch(actionCreator(RESET, { resetCount: resetCnt }));
-}
-
+// function 실행
 increament();
 increament();
 increament();
+decreament();
 reset();
-reset(0);
+reset(100);
 increament();
+decreament();
