@@ -2,6 +2,10 @@
 // 위 부분은 React.createElement를 template 대체 할 수 있다.
 
 function renderElement(node) {
+  // 해당 노드가 text 인 경우에 대한 예외 처리
+  if (typeof node === "string") {
+    return document.createTextNode(node);
+  }
   // type에 해당하는 element를 생성.
   const el = document.createElement(node.type);
 
