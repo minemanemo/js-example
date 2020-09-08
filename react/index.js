@@ -1,6 +1,14 @@
-// import React from "react";
-// import ReactDOM from "react-dom";
-// 상단의 import 하는 부분은 index.html에서 link 하였음.
+/** @jsx createElement */
+// 위 부분은 React.createElement를 template 대체 할 수 있다.
+
+function createElement(type, props = {}, ...children) {
+  // type이 funtion인 경우 예외 처리
+  if (typeof type === "function") {
+    return type.apply(null, [props, ...children]);
+  }
+
+  return { type, props, children };
+}
 
 function App() {
   return (
@@ -15,4 +23,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+console.log(<App />);
