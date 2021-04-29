@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div style="display: inline-grid">
+      <textarea id="json-text" style="width: 500px; height: 400px">
+{
+  "key1": "value1",
+  "key2": "value2",
+  "key3": "value3"
+}
+      </textarea>
+      <input id="filename" type="text" value="example.csv" />
+      <button id="csv-download-btn">CSV Download</button>
+    </div>
+    <script src="./json-to-csv.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var btn = document.getElementById("csv-download-btn");
+        if (btn.addEventListener) {
+          btn.addEventListener("click", function () {
+            var filename = document.getElementById("filename");
+            var jsonText = document.getElementById("json-text");
+            jsonToCsv(filename.value, JSON.parse(jsonText.value));
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
